@@ -20,7 +20,7 @@ rules = apriori(transactions=transactions, min_support=.003, min_confidence=.2, 
 
 # Displaying the first results coming directly from the output of the apriori function
 results = list(rules)
-#print(results)
+print(results)
 
 # Putting the result well organized into a Pandas Dataframe
 """
@@ -43,10 +43,10 @@ def inspect(results):
     lifts = [result[2][0][3] for result in results]
     return list(zip(lhs, rhs, supports, confidences, lifts))
 
-## Displaying the results non sorted
+# Displaying the results non sorted
 resultsInDataFrame = pd.DataFrame(data=inspect(results), columns=[
     'Left Hand Side', 'Right Hand Side', 'Support', 'Confidence', 'Lift'])
 print(resultsInDataFrame)
 
-## Displaying the results sorted by descending lifts
+# Displaying the results sorted by descending lifts
 print(resultsInDataFrame.nlargest(n=10, columns='Lift'))
