@@ -64,10 +64,10 @@ cnn.fit(x=training_set, validation_data=test_set, epochs=25)
 
 ## Part 4 - Making a single prediction
 import numpy as np
-from tensorflow.keras.utils import load_img
+from tensorflow.keras.utils import load_img, img_to_array
 
 test_image1 = load_img('dataset/single_prediction/cat_or_dog_1.jpg', target_size=(64, 64))
-test_image1 = image.img_to_array(test_image1)
+test_image1 = img_to_array(test_image1)
 test_image1 = np.expand_dims(test_image1, axis=0)
 result1 = cnn.predict(test_image1)
 training_set.class_indices
