@@ -35,18 +35,23 @@ folds = createFolds(training_set$Purchased, k = 10)
 cv = lapply(folds, function(x) {
   training_fold = training_set[-x, ]
   test_fold = na.omit(training_fold[x, ])
-  print(training_fold[, 3])
-  print(test_fold[, 3])
   classifier = svm(formula = Purchased ~ .,
                    data = training_fold,
                    type = 'C-classification',
                    kernel = 'radial')
   y_pred = predict(classifier, newdata = test_fold[-3])
-  print(length(y_pred))
   cm = table(test_fold[, 3], y_pred)
   accuracy = (cm[1, 1] + cm[2, 2]) / (cm[1, 1] + cm[1, 2] + cm[2, 1] + cm[2, 2])
   return(accuracy)
 })
+print(mean(as.numeric(cv)))
+
+## Applying the Gird Search to find the best parameters
+#install.packages('caret')
+library(caret)
+classifier_train = train(form = Purchased ~ ., data = training_set, method = 'svmRadial')
+classifier_train
+classifier_train$bestTune
 
 ## Visualizing the training set results
 library(ElemStatLearn)
